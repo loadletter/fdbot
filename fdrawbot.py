@@ -4,8 +4,8 @@ import socket
 DefaultServer = "flockdraw.com"
 DefaultPort = 443
 BuffSize = 4096
-Width = 801
-Height = 481
+Width = 800
+Height = 480
 
 def img2png(img, w = Width, h = Height):
     from PIL import Image
@@ -138,9 +138,8 @@ class FlockDrawConnection:
     def handleChat(self, origin, args):
         print "Event:", origin, "chat", args
     def debugSavePng(self, filename, b64coded):
-        f = open( filename, "wb" )
-        f.write( img2png( b64coded ) )
-        f.close()
+        with open( filename, "wb" ) as f:
+            f.write( img2png( b64coded ) )
     def handleBitmap(self, origin, data):
         for user in self.oweBitmap:
             self.warnWith( "relaying bitmap to %s", user )
@@ -281,7 +280,7 @@ class FlockDrawPNGServer( FlockDrawConnection ):
 
 if __name__ == '__main__':
     import time
-    conn = FlockDrawPNGServer( "testone", "observer", pngfile = "es801x481_4.png" )
+    conn = FlockDrawPNGServer( "testone", "observer", pngfile = "blank.png" )
     try:
         while True:
             conn.trySend()
