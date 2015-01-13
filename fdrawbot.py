@@ -28,6 +28,10 @@ def png2img(png):
     data = zlib.compress( "".join( [ chr(a)+chr(r)+chr(g)+chr(b) for r,g,b,a in pilim.getdata() ] ) )
     return base64.b64encode( data )
 
+def colour_int2hex(num):
+    h = hex(num).replace("0x", "#")
+    return h.replace("#", {7: "#", 6: "#0", 5: "#00"}[len(h)])
+
 class FlockDrawConnection:
     def __init__(self,
                  whiteboard,
@@ -132,7 +136,7 @@ class FlockDrawConnection:
     def handleBrushChange(self, origin, args):
         print "Event:", origin, "tool", args
     def handleColourChange(self, origin, args):
-        print "Event:", origin, "colour", args
+        print "Event:", origin, "colour", args, "=", colour_int2hex(int(args))
     def handleFlush(self, origin, args):
         print "Event:", origin, "flush", args
     def handleChat(self, origin, args):
