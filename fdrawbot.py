@@ -135,6 +135,8 @@ class FlockDrawConnection:
         print "Event:", origin, "colour", args
     def handleFlush(self, origin, args):
         print "Event:", origin, "flush", args
+    def handleChat(self, origin, args):
+        print "Event:", origin, "chat", args
     def debugSavePng(self, filename, b64coded):
         f = open( filename, "wb" )
         f.write( img2png( b64coded ) )
@@ -170,6 +172,7 @@ class FlockDrawConnection:
                 'Cch': self.handleColourChange,
                 'F': self.handleFlush,
                 'Bo': self.handleBitmap,
+                'C': self.handleChat,
             }[ command ]
         except KeyError:
             self.warnWith( "ignoring command %s", command )
