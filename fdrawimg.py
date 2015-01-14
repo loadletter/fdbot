@@ -6,10 +6,14 @@ import base64
 Width = 800
 Height = 480
 
-def img2png(img, w=Width, h=Height):
+def img2pil(img, w=Width, h=Height):
     data = base64.b64decode(img)
     pixels = zlib.decompress(data)
-    pilim = Image.frombuffer("RGBA", (w, h), pixels, "raw", "ARGB", 0, 1).convert("RGB")
+    return Image.frombuffer("RGBA", (w, h), pixels, "raw", "ARGB", 0, 1).convert("RGB")
+
+
+def img2png(img, w=Width, h=Height):
+    pilim = img2pil(img, w, h)
     f = StringIO.StringIO()
     pilim.save(f, "png")
     return f.getvalue()
@@ -22,5 +26,19 @@ def png2img(png):
 
 
 def colour_int2hex(num):
-    h = hex(num).replace("0x", "#")
-    return h.replace("#", ''.join(("#", "0" * (7 - len(h)))))
+    h = hex(num)
+    return h.replace("0x", ''.join(("#", "0" * (7 - len(h)))))
+    
+class LocalWhiteboard:
+    def __init__(self, img, w=Width, h=Height):
+        self.width = w
+        self.height = h
+        if isinstance(img, str):
+            self.img = Image.open(img).convert('RGBA')
+        else:
+            self.fromBitmap()
+     
+    def fromBitmap(self, img):
+        self.img = img2pil(img, self.width, self.height)
+        
+                 
