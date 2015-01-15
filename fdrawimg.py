@@ -73,11 +73,10 @@ class LocalWhiteboard:
             #backspace
             self.users[user]['text'].pop()
         
-    def onFlush(self):
-        #for user in users
-        #   if user.keydown
-        #       self.tool(user, user.move)
-        #       user.move = []
+    def onFlush(self, user):
+        if self.users.[user]['keydown']:
+        #   self.tool(user, user.move)
+        #   user.move = []
         pass
     
     def addUser(self, user):
