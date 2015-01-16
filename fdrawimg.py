@@ -74,7 +74,8 @@ class LocalWhiteboard:
             self.users[user]['text'].pop()
         
     def onFlush(self, user):
-        if self.users.[user]['keydown']:
+        if self.users[user]['keydown']:
+            pass
         #   self.tool(user, user.move)
         #   user.move = []
         pass
